@@ -9,6 +9,7 @@ from django.conf.urls.static import static
 apps_patterns = [
     url(r'^professors/', include('professors.urls')),
     url(r'^courses/', include('courses.urls')),
+    url(r'^voting/', include('voting.urls')),
 ]
 
 # General api patterns
