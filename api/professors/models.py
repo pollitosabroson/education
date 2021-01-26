@@ -8,6 +8,7 @@ from core.models import PublicIdModel, TimeStampedModel
 class Professor(
     PublicIdModel, TimeStampedModel, AbstractBaseUser
 ):
+    USERNAME_FIELD = 'email'
 
     name = models.TextField(
         _('name'),
@@ -28,3 +29,11 @@ class Professor(
 
         verbose_name = _('Professor')
         verbose_name_plural = _('Professors')
+
+    def to_public_representation(self):
+        """Create a public representation of the teacher."""
+        return {
+            "id": self.public_id,
+            "name": self.name,
+            "email": self.email
+        }
