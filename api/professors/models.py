@@ -31,7 +31,10 @@ class Professor(
         verbose_name_plural = _('Professors')
 
     def to_public_representation(self):
-        """Create a public representation of the teacher."""
+        """Create a public representation of the teacher.
+        Return:
+            Dict: Public representation
+        """
         return {
             "id": self.public_id,
             "name": self.name,
