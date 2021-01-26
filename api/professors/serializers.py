@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
 
@@ -9,7 +10,8 @@ class ProfessorSerializer(serializers.ModelSerializer):
 
     id = serializers.CharField(
         read_only=True,
-        source="public_id"
+        source="public_id",
+        max_length=settings.LONG_PUBLIC_ID
     )
     name = serializers.CharField(
         required=True
@@ -22,6 +24,15 @@ class ProfessorSerializer(serializers.ModelSerializer):
         """Meta class for professor Serializer."""
         model = Professor
         fields = ('name', 'email', 'id')
+
+    def to_representation(self, instance):
+        """Create a public representation of the professor.
+        Args:
+            Instance(Instance): Instance of professor
+        Return:
+            Dict: Dicrt
+        """
+        return instance.to_public_representation()
 
     def validate_email(self, value):
         """Check exists professor."""

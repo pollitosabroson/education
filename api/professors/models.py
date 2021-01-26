@@ -1,12 +1,15 @@
 from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from core.models import PublicIdModel, TimeStampedModel
+from core.models import PublicIdModel, TimeStampedModel, VoteModel
+from voting.models import Vote
 
 
 class Professor(
-    PublicIdModel, TimeStampedModel, AbstractBaseUser
+    PublicIdModel, TimeStampedModel, AbstractBaseUser,
+    VoteModel
 ):
     USERNAME_FIELD = 'email'
 
@@ -21,6 +24,7 @@ class Professor(
         unique=True,
         help_text=_('I stand out in that an e-mail is stored')
     )
+    vote = GenericRelation(Vote)
 
     class Meta:
         """
@@ -38,5 +42,6 @@ class Professor(
         return {
             "id": self.public_id,
             "name": self.name,
-            "email": self.email
+            "email": self.email,
+            "votes": self.vote_representation()
         }
