@@ -1,18 +1,22 @@
 import logging
 
 from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from core.models import PublicIdModel, TimeStampedModel
+from core.models import PublicIdModel, TimeStampedModel, VoteModel
 from professors.models import Professor
+from voting.models import Vote
 
 logger = logging.getLogger(__name__)
 
 
 class Course(
-    PublicIdModel, TimeStampedModel, AbstractBaseUser
+    PublicIdModel, TimeStampedModel, VoteModel, AbstractBaseUser
 ):
+
+    USERNAME_FIELD = 'name'
 
     name = models.TextField(
         _('name'),
@@ -26,6 +30,8 @@ class Course(
         on_delete=models.DO_NOTHING,
         related_name='courses'
     )
+
+    vote = GenericRelation(Vote)
 
     class Meta:
         """
@@ -58,5 +64,6 @@ class Course(
         return {
             "id": self.public_id,
             "name": self.name,
-            "professor": self.professor.to_public_representation()
+            "professor": self.professor.to_public_representation(),
+            "votes": self.vote_representation()
         }

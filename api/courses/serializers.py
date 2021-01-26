@@ -63,8 +63,8 @@ class CourseSerializer(serializers.ModelSerializer):
     def create(self, validate_data):
         """Create new course.
         Args:
-        validate_data(instance): Instance with all the data of the
-        serializers and values ​​of the view
+            validate_data(instance): Instance with all the data of the
+            serializers and values ​​of the view
         Return:
             Instance: New course.
         """
