@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'core',
     'professors',
     'courses',
+    'voting',
 ]
 
 MIDDLEWARE = [
@@ -127,3 +128,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Values to vote
+MAX_VALUE_VOTE = 5
+MIN_VALUE_VOTE = 1
+
+# Long public id
+LONG_PUBLIC_ID = 12
