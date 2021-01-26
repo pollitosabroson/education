@@ -9,14 +9,26 @@ logger = logging.getLogger(__name__)
 
 
 class ProfessorsListCreateViewSet(generics.ListCreateAPIView):
-    """Create and list all users."""
+    """Endpoint to create a teacher within the platform."""
 
     queryset = Professor.objects.all()
     serializer_class = ProfessorSerializer
 
+    def get(self, request, *args, **kwargs):
+        """You get the list of all the existing professors on the platform."""
+        return super(
+            ProfessorsListCreateViewSet, self
+        ).get(request, *args, **kwargs)
+
+    def create(self, request, *args, **kwargs):
+        """Endpoint to create a teacher within the platform."""
+        return super(
+            ProfessorsListCreateViewSet, self
+        ).create(request, *args, **kwargs)
+
 
 class ProfessorViewSet(generics.RetrieveAPIView):
-    """Single profile for professor."""
+    """Endpoint to get a professor's profile"""
 
     queryset = Professor.objects.all()
     serializer_class = ProfessorSerializer
