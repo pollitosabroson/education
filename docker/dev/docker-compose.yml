@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+
+  # Postgres BD
+  postgres:
+    build: postgres/
+    environment:
+      - POSTGRES_USER=education
+      - POSTGRES_PASSWORD=mypass
+      - POSTGRES_DB=education_local
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+      - ./postgres/shared/:/data/shared
+
+  # API Eduaction
+  api:
+    build: django/
+    command: sh /scripts/run_web.sh
+    volumes:
+      - ../../api:/app
+      - ./django/scripts:/scripts
+      - ./django/requirements.txt:/app/requirements.txt
+      - ./django/configs/pytest.ini:/app/pytest.ini
+    env_file:
+      - ./django/configs/.env
+    depends_on:
+      - postgres
+    ports:
+      - "8091:5560"
