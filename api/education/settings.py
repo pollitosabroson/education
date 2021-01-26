@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # third party
     'rest_framework',
+    'rest_framework_swagger',
     # apps
     'core',
     'professors',
@@ -129,9 +130,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+
 # Values to vote
 MAX_VALUE_VOTE = 5
 MIN_VALUE_VOTE = 1
 
 # Long public id
 LONG_PUBLIC_ID = 12
+
+# REST FRAMEWORK set pagination
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination', # NOQA
+    'PAGE_SIZE': 10,
+}

@@ -15,4 +15,18 @@ apps_patterns = [
 # General api patterns
 urlpatterns = [
     url(r'^api/v1/', include(apps_patterns)),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
+
+# Add Documentation in URLS
+if settings.DEBUG:
+    from rest_framework_swagger.views import get_swagger_view  # NOQA
+
+    schema_view = get_swagger_view(title='Education')
+
+    urlpatterns += [
+        url(r'^$', schema_view)
+    ]
+urlpatterns + static(
+    settings.STATIC_URL,
+    document_root=settings.STATIC_ROOT
+)
