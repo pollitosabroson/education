@@ -85,3 +85,8 @@ local_settings.py
 
 ### Docker values
 docker/*/*/data
+
+
+# Ignore static files
+
+api/static/
